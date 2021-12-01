@@ -1,20 +1,20 @@
 #include <iostream>
+#include <vector>
 #include <fstream>
 
 using namespace std;
 
 int count_increases(char *mem, int size)
 {
-	int old_num = 0;
 	int new_num = 0;
 	int increases = 0;
 	int i = 0;
+	int j = 0;
+	int single_array[2000];
+	int sum_array[1998];
+	vector<int> naampje;
 	
-	while (mem[i] != '\n')
-	{
-		old_num = old_num * 10 + mem[i] - '0';
-		i++;
-	}
+	// turn input into array of integers
 	while (i < size)
 	{
 		new_num = 0;
@@ -24,9 +24,37 @@ int count_increases(char *mem, int size)
 			i++;
 		}
 		i++;
-		if (new_num > old_num)
+		single_array[j] = new_num;
+		j++;
+	}
+	//null sum_array
+	j = 0;
+	while (j < 1998)
+	{
+		sum_array[j] = 0;
+		j++;
+	}
+	//make sum_array
+	i = 0;
+	j = 0;
+	while(i < 2000)
+	{
+		if (j - 2 >= 0 && j < 2000)
+			sum_array[j - 2] = sum_array[j - 2] + single_array[i];
+		if (j - 1 >= 0 && j < 1999)
+			sum_array[j - 1] = sum_array[j - 1] + single_array[i];
+		if (j == i && j < 1998)
+			sum_array[j] = sum_array[j] + single_array[i];
+		i++;
+		j++;
+	}
+	//compare sum_array
+	j = 0;
+	while (j < 1998)
+	{
+		if (j - 1 >= 0 && sum_array[j - 1] < sum_array[j])
 			increases++;
-		old_num = new_num;
+		j++;
 	}
 	return increases;
 }
