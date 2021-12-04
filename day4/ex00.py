@@ -5,6 +5,7 @@ def visualiser(current_num, all_boards):
             print(row)
         print('\n')
 
+
 def calc_winning_score(current_num, winning_board):
     # print("Winning board:\n" + str(winning_board))
     # print("Winning num:\n" + str(current_num))
@@ -82,28 +83,23 @@ def main():
     file.readline()
 
     # Make Bingo boards
-    bingo_row = [[] for x in range(5)]
-    bingo_board = [bingo_row for y in range(6)]
-    all_boards = [bingo_board for z in range(100)]
+    all_boards = []
 
     all_input = [[] for x in range(600)]
     for i in range(600):
         all_input[i] = file.readline().split()
 
-    board = 0
-    line = 0
-    for i in range(600):
-        # print(str(board) + "," + str(line) + "  writing index: " + str(i))
-        for fuckoff in range(len(all_input[i])):
-            all_boards[board][line][fuckoff] = all_input[i][fuckoff]
-        # print(all_boards[board][line])
-        line += 1
-        line = line % 6
-        if line == 0:
-            board += 1
+    K = 6
+    board = []
+    row_count = 0
+    for row in all_input:
+        board.append(row)
+        row_count += 1
+        if row_count >= K:
+            all_boards.append(board)
+            board = []
+            row_count = 0
 
-    # visualiser('1', all_boards)
-    print(all_boards)
     # Find winning board & score
     winning_score = find_winning_board(numbers_drawn, all_boards)
 
