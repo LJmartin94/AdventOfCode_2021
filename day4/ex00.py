@@ -1,3 +1,10 @@
+def visualiser(current_num, all_boards):
+    print("Number this turn:" + current_num)
+    for board in all_boards:
+        for row in board:
+            print(row)
+        print('\n')
+
 def calc_winning_score(current_num, winning_board):
     # print("Winning board:\n" + str(winning_board))
     # print("Winning num:\n" + str(current_num))
@@ -42,12 +49,8 @@ def check_all_boards(all_boards):
     return -1
 
 
-
 def find_winning_board(numbers_drawn, all_boards):
-    print(all_boards)
     numbers_drawn = numbers_drawn.split(',')
-    print(numbers_drawn)
-
     # Mark of current_num with x
     for i in range(len(numbers_drawn)):
         current_num = numbers_drawn[i]
@@ -64,8 +67,9 @@ def find_winning_board(numbers_drawn, all_boards):
             b += 1
         # After every number is marked off, check if any boards have won
         winning_board = check_all_boards(all_boards)
-        print("Winning board index: " + str(winning_board))
+        # visualiser(current_num, all_boards)
         if winning_board != -1:
+            print("Winning board index: " + str(winning_board))
             return calc_winning_score(current_num, all_boards[winning_board])
     return 0
 
@@ -81,15 +85,23 @@ def main():
     bingo_board = [[] for x in range(6)]
     all_boards = [bingo_board for y in range(100)]
 
-    b = 0
-    l = 0
-    for line in file:
-        all_boards[b][l] = line.split()
-        l += 1
-        l = l % 6
-        if l == 0:
-            b += 1
+    all_input = [[] for x in range(600)]
+    for i in range(600):
+        all_input[i] = file.readline().split()
 
+    board = 0
+    line = 0
+    for i in range(600):
+        print(str(board) + "," + str(line) + "  writing index: " + str(i))
+        all_boards[board][line] = all_input[i]
+        print(all_boards[board][line])
+        line += 1
+        line = line % 6
+        if line == 0:
+            board += 1
+
+    # visualiser('1', all_boards)
+    print(all_boards[0][0][0])
     # Find winning board & score
     winning_score = find_winning_board(numbers_drawn, all_boards)
 
