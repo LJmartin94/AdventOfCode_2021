@@ -82,8 +82,9 @@ def main():
     file.readline()
 
     # Make Bingo boards
-    bingo_board = [[] for x in range(6)]
-    all_boards = [bingo_board for y in range(100)]
+    bingo_row = [[] for x in range(5)]
+    bingo_board = [bingo_row for y in range(6)]
+    all_boards = [bingo_board for z in range(100)]
 
     all_input = [[] for x in range(600)]
     for i in range(600):
@@ -92,16 +93,17 @@ def main():
     board = 0
     line = 0
     for i in range(600):
-        print(str(board) + "," + str(line) + "  writing index: " + str(i))
-        all_boards[board][line] = all_input[i]
-        print(all_boards[board][line])
+        # print(str(board) + "," + str(line) + "  writing index: " + str(i))
+        for fuckoff in range(len(all_input[i])):
+            all_boards[board][line][fuckoff] = all_input[i][fuckoff]
+        # print(all_boards[board][line])
         line += 1
         line = line % 6
         if line == 0:
             board += 1
 
     # visualiser('1', all_boards)
-    print(all_boards[0][0][0])
+    print(all_boards)
     # Find winning board & score
     winning_score = find_winning_board(numbers_drawn, all_boards)
 
