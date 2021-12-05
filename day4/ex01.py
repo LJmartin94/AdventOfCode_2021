@@ -1,3 +1,5 @@
+g_winning_boards = []
+
 def visualiser(current_num, all_boards):
     print("Number this turn:" + current_num)
     for board in all_boards:
@@ -7,15 +9,11 @@ def visualiser(current_num, all_boards):
 
 
 def calc_winning_score(current_num, winning_board):
-    # print("Winning board:\n" + str(winning_board))
-    # print("Winning num:\n" + str(current_num))
     unmarked_total = 0
     for y in range(5):
         for x in range(5):
             if winning_board[y][x] != 'x':
                 unmarked_total += int(winning_board[y][x])
-    print(str(unmarked_total))
-    print(str(current_num))
     score = int(unmarked_total) * int(current_num)
     return score
 
@@ -33,7 +31,8 @@ def check_all_boards(all_boards):
                     win_score += 1
                 n += 1
             if win_score == 5:
-                return b
+                if g_winning_boards.count([b]) == 0:
+                    g_winning_boards.append([b])
             r += 1
         b += 1
     # check columns
@@ -45,12 +44,15 @@ def check_all_boards(all_boards):
                 if board[y][x] == 'x':
                     win_score += 1
             if win_score == 5:
-                return b
+                if g_winning_boards.count([b]) == 0:
+                    g_winning_boards.append([b])
         b += 1
     return -1
 
 
 def find_winning_board(numbers_drawn, all_boards):
+    all_winning_boards = [-1]
+    board_n = 0
     numbers_drawn = numbers_drawn.split(',')
     # Mark of current_num with x
     for i in range(len(numbers_drawn)):
@@ -68,10 +70,10 @@ def find_winning_board(numbers_drawn, all_boards):
             b += 1
         # After every number is marked off, check if any boards have won
         winning_board = check_all_boards(all_boards)
-        # visualiser(current_num, all_boards)
-        if winning_board != -1:
-            print("Winning board index: " + str(winning_board))
-            return calc_winning_score(current_num, all_boards[winning_board])
+        if len(g_winning_boards) == 100:
+            break
+    winning_board = int(g_winning_boards[99][0])
+    return calc_winning_score(current_num, all_boards[winning_board])
     return 0
 
 
@@ -103,7 +105,7 @@ def main():
     # Find winning board & score
     winning_score = find_winning_board(numbers_drawn, all_boards)
 
-    print("Answer to 4.0:")
+    print("Answer to 4.1:")
     print(winning_score)
 
 
