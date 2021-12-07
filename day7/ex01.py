@@ -14,7 +14,7 @@ def main():
     for entry in crab_list:
         fuel_cost += abs(median - entry)
     answer = fuel_cost
-    print("Answer to 7.0:")
+    print("Answer to 7.1:")
     print(answer)
 
 
