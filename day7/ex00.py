@@ -1,3 +1,5 @@
+import statistics
+
 def main():
     file = open("test_input.txt")
     crab_list = file.readline()
@@ -6,7 +8,12 @@ def main():
         crab_list[i] = int(crab_list[i])
     crab_list.sort()
 
-    answer = crab_list
+    median = statistics.median(crab_list)
+    print(median)
+    fuel_cost = 0
+    for entry in crab_list:
+        fuel_cost += abs(median - entry)
+    answer = fuel_cost
     print("Answer to 7.0:")
     print(answer)
 
