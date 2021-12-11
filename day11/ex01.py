@@ -1,3 +1,11 @@
+def check_all_zero(grid):
+    for y in range(len(grid)):
+        for x in range(len(grid[y])):
+            if grid[y][x] != 0:
+                return 0
+    return 1
+
+
 def visualise(grid):
     for row in grid:
         for char in row:
@@ -30,8 +38,6 @@ def flash_point(grid, point, flashes):
     grid[y][x] = 0
     flashes += 1
 
-    visualise(grid)
-
     north = (y - 1, x)
     flashes = update_point(grid, north, flashes)
     north_east = (y - 1, x + 1)
@@ -60,9 +66,12 @@ def main():
     for y in range(ydims):
         grid[y] = list(map(int, file.readline().split('\n')[0]))
 
-    step_total = 100
+    step_total = 0
 
-    for steps in range(step_total):
+    while True:
+        print(step_total)
+        visualise(grid)
+        step_total += 1
         for y in range(ydims):
             for x in range(len(grid[y])):
                 if 0 <= grid[y][x] <= 9:
@@ -71,8 +80,10 @@ def main():
             for x in range(len(grid[y])):
                 if grid[y][x] >= 10:
                     flashes = flash_point(grid, (y, x), flashes)
+        if check_all_zero(grid) == 1:
+            break
 
-    answer = flashes
+    answer = step_total
     print("Answer to 11.1:")
     print(answer)
 
