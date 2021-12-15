@@ -5,7 +5,7 @@ class Cave:
         self.connected_caves = []
 
 
-def traverse_caves(cave_str, cave_array, path, all_paths):
+def traverse_caves(cave_str, cave_array, path, all_paths, special_cave):
     cave = go_to_cave(cave_str, cave_array)
     if cave_str == 'end':
         return
@@ -13,7 +13,13 @@ def traverse_caves(cave_str, cave_array, path, all_paths):
         if next_cave.isupper() or str(path).find(next_cave) == -1:
             p = path.copy()
             p.append(next_cave)
-            traverse_caves(next_cave, cave_array, p, all_paths)
+            traverse_caves(next_cave, cave_array, p, all_paths, special_cave)
+            all_paths.append(p)
+        elif special_cave == 'NaN' and next_cave != 'start':
+            special_cave = next_cave
+            p = path.copy()
+            p.append(next_cave)
+            traverse_caves(next_cave, cave_array, p, all_paths, special_cave)
             all_paths.append(p)
 
 
@@ -68,7 +74,8 @@ def main():
     path = []
     path.append('start')
     all_paths = []
-    traverse_caves('start', cave_array, path, all_paths)
+    special_cave = 'NaN'
+    traverse_caves('start', cave_array, path, all_paths, special_cave)
     i = len(all_paths) - 1
     while i >= 0:
         last_elem = len(all_paths[i]) - 1
