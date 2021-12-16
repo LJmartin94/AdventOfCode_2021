@@ -15,7 +15,7 @@ def traverse_caves(cave_str, cave_array, path, all_paths, special_cave):
             p = path.copy()
             p.append(next_cave)
             traverse_caves(next_cave, cave_array, p, all_paths, special_cave)
-        elif special_cave == 'NaN' and next_cave != 'start':
+        elif not special_cave and next_cave != 'start':
             special_cave_copy = next_cave
             p = path.copy()
             p.append(next_cave)
@@ -37,10 +37,11 @@ def not_already_included(cave_ids, cave):
 
 
 def main():
-    file = open("input.txt")
+    lines = open("input.txt").read().split('\n')
     cave_pairs = []
-    for line in file:
-        cave_pairs.append(line.split('\n')[0].split('-'))
+    for line in lines:
+        cave_pairs.append(line.split('-'))
+    print(cave_pairs)
 
     cave_ids = []
     for pair in cave_pairs:
@@ -73,7 +74,7 @@ def main():
     path = []
     path.append('start')
     all_paths = []
-    special_cave = 'NaN'
+    special_cave = None
     traverse_caves('start', cave_array, path, all_paths, special_cave)
     i = len(all_paths) - 1
     while i >= 0:
