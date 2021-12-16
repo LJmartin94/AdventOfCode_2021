@@ -8,19 +8,18 @@ class Cave:
 def traverse_caves(cave_str, cave_array, path, all_paths, special_cave):
     cave = go_to_cave(cave_str, cave_array)
     if cave_str == 'end':
+        all_paths.append(path)
         return
     for next_cave in cave.connected_caves:
         if next_cave.isupper() or str(path).find(next_cave) == -1:
             p = path.copy()
             p.append(next_cave)
             traverse_caves(next_cave, cave_array, p, all_paths, special_cave)
-            all_paths.append(p)
         elif special_cave == 'NaN' and next_cave != 'start':
-            special_cave = next_cave
+            special_cave_copy = next_cave
             p = path.copy()
             p.append(next_cave)
-            traverse_caves(next_cave, cave_array, p, all_paths, special_cave)
-            all_paths.append(p)
+            traverse_caves(next_cave, cave_array, p, all_paths, special_cave_copy)
 
 
 def go_to_cave(cave_str, cave_array):
@@ -38,7 +37,7 @@ def not_already_included(cave_ids, cave):
 
 
 def main():
-    file = open("test_input.txt")
+    file = open("input.txt")
     cave_pairs = []
     for line in file:
         cave_pairs.append(line.split('\n')[0].split('-'))
