@@ -93,9 +93,10 @@ def astar(map, start, end):
             # Give adjacent position its g/h/f values
             pos.g = current_point.g + map[pos.position[0]][pos.position[1]]
             # Pythagorean C^2 = A^2 + B^2, for 'direct' distance to end point.
-            pos.h = ((pos.position[0] - ending_point.position[0]) ** 2) + ((pos.position[1] - ending_point.position[1]) ** 2)
+            # pos.h = ((pos.position[0] - ending_point.position[0]) ** 2) + ((pos.position[1] - ending_point.position[1]) ** 2)
+            pos.h = abs(ending_point.position[0] - pos.position[0]) + abs(ending_point.position[1] - pos.position[1])
             pos.f = pos.g + pos.h
-            print("Checking pos: " + str(pos.position) + " from parent: " + str(pos.parent.position) + " G == " + str(pos.g) + " H == " + str(pos.h) + " F == " + str(pos.f))
+            # print("Checking pos: " + str(pos.position) + " from parent: " + str(pos.parent.position) + " G == " + str(pos.g) + " H == " + str(pos.h) + " F == " + str(pos.f))
             # Check if adjacent position is already in the open list of positions being considered ->
             # then only replace it if it has a lower cost score
             for open_pos in open_list:
@@ -103,6 +104,8 @@ def astar(map, start, end):
                     continue
             # Add adjacent pos to the open_list
             open_list.append(pos)
+            # print("Open list: " + str([(entry.position, entry.f) for entry in open_list]))
+            # print("Clsd list: " + str([(entry.position, entry.f) for entry in closed_list]))
 
 
 def main():
