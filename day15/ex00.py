@@ -94,7 +94,9 @@ def astar(map, start, end):
             pos.g = current_point.g + map[pos.position[0]][pos.position[1]]
             # Pythagorean C^2 = A^2 + B^2, for 'direct' distance to end point.
             # pos.h = ((pos.position[0] - ending_point.position[0]) ** 2) + ((pos.position[1] - ending_point.position[1]) ** 2)
-            pos.h = abs(ending_point.position[0] - pos.position[0]) + abs(ending_point.position[1] - pos.position[1])
+            # Number of squares away from end * 5 (roughly average risk value)
+            pos.h = (abs(ending_point.position[0] - pos.position[0]) + abs(ending_point.position[1] - pos.position[1])) * 5
+            # print(f'Position {pos.position} has h value {pos.h}')
             pos.f = pos.g + pos.h
             # print("Checking pos: " + str(pos.position) + " from parent: " + str(pos.parent.position) + " G == " + str(pos.g) + " H == " + str(pos.h) + " F == " + str(pos.f))
             # Check if adjacent position is already in the open list of positions being considered ->
