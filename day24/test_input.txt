@@ -1,4 +1,4 @@
-Module 1
+Module 0
 w = input()
 z.push (w + 6)
 
@@ -26,7 +26,7 @@ add z y // z = w+6
 END:
 w = 1-9 / x = 1  / y = w+6 / z = w + 6
 
-Module 2
+Module 1
 
 START:
 w[1] = 1-9 / x = 1 / y = w + 12 / z = (w[0] + 6) * 26 + (w[1] + 12)
@@ -51,221 +51,450 @@ mul y x // y = w + 12
 add z y
 
 END:
-w[1] = 1-9 / x = 1 / y = w + 12 / z = (w[0] + 6) * 26 + (w[1] + 12)
+w[1] = 1-9 / x = 1 / y = w[1] + 12 / z = (w[0] + 6) * 26 + (w[1] + 12)
+
+
+Module 2
+START:
+w[2] = 1-9 / x = 1 / y = w2 + 8 / z = (w0+6 | w1 + 12 | w2 + 8)
+
+inp w //
+mul x 0 //
+add x z //
+mod x 26 // x = w1 + 12
+div z 1 // z = z
+add x 15 // x = w1 + 27
+eql x w // x = 0
+eql x 0 // x = 1
+mul y 0 // y = 0
+add y 25 // y = 25
+mul y x // y = 25
+add y 1 // y = 26
+mul z y // z = (w0+6 | w1 + 12 | 0)
+mul y 0 // y = 0
+add y w // y = w2
+add y 8 // y = w2 + 8
+mul y x //
+add z y // (w0+6 | w1 + 12 | w2 + 8)
+
+END:
+w[2] = 1-9 / x = 1 / y = w2 + 8 / z = (w0+6 | w1 + 12 | w2 + 8)
+
+Module 3:
+
+START:
+if w3 == (w2 - 3):
+    x = 0 / y = 0 / z = (w0+6 | w1 + 12)
+else
+    x = 1 / y = w3+7 / z = (w0+6 | w1 + 12 | w3+7)
+
+w3 = 1-9 / x = 0 or 1 / y = 0 or w3+7 / z = (w0+6 | w1 + 12) or (w0+6 | w1 + 12 | w3+7)
+
+inp w //
+mul x 0 //
+add x z //
+mod x 26 //
+div z 26 //
+add x -11 //
+eql x w // Does x equal w? (w3 == w2 - 3)? if yes =1, else =0
+eql x 0 // x inverted (only if w3 != w2 -3, is x = 1)
+mul y 0 //
+add y 25 // y = 25
+mul y x // y = 25 or 0
+add y 1 // y = 26 or 1
+mul z y // z = either shifted for space to push, or left as it was
+mul y 0 // y =0
+add y w // y = w3
+add y 7 // y = w3 +7
+mul y x // y = w3+7 * 0 or 1
+add z y //
+
+END:
+if w3 == (w2 - 3):
+    x = 0 / y = 0 / z = (w0+6 | w1 + 12)
+else
+    x = 1 / y = w3+7 / z = (w0+6 | w1 + 12 | w3+7)
+
+w3 = 1-9 / x = 0 or 1 / y = 0 or w3+7 / z = (w0+6 | w1 + 12) or (w0+6 | w1 + 12 | w3+7)
+
+MODULE 4:
+START:
+if w3 == (w2 - 3):
+    x = 1 / y = w4 +7 / z = (w0+6 | w1 + 12 | w4 +7)
+else
+    x = 1 / y = w4 +7 / z = (w0+6 | w1 + 12 | w3+7 | w4 +7)
+w4 = 1-9
+
+inp w//
+mul x 0//
+add x z//
+mod x 26//
+div z 1//
+add x 15//
+eql x w // x cannot equal w as x is either w1+27 or w3+22, therefore x = 0
+eql x 0 // x does eq 0, so now is 1
+mul y 0 //
+add y 25 // y =25
+mul y x // y = 25
+add y 1 // y = 26
+mul z y // z is (w0+6 | w1 + 12 | 0) or (w0+6 | w1 + 12 | w3+7 | 0)
+mul y 0 // y = 0
+add y w // y = w4
+add y 7 // y = w4 +7
+mul y x // y = w4 +7
+add z y // z is (w0+6 | w1 + 12 | w4 +7) or (w0+6 | w1 + 12 | w3+7 | w4 +7)
+
+END:
+if w3 == (w2 - 3):
+    x = 1 / y = w4 +7 / z = (w0+6 | w1 + 12 | w4 +7)
+else
+    x = 1 / y = w4 +7 / z = (w0+6 | w1 + 12 | w3+7 | w4 +7)
+w4 = 1-9
+
+MODULE 5
+
+START:
+if w3 == (w2 - 3):
+    x = 1 / y = w5+12/ z = (w0+6 | w1 + 12 | w4 +7 | w5+12)
+else
+    x = 1 / y = w5+12 / z = (w0+6 | w1 + 12 | w3+7 | w4 +7 | w5+12)
+w5 = 1-9
 
 inp w
-mul x 0
-add x z
-mod x 26
-div z 1
-add x 15
-eql x w
-eql x 0
-mul y 0
-add y 25
-mul y x
-add y 1
-mul z y
-mul y 0
-add y w
-add y 8
-mul y x
-add z y
-inp w
-mul x 0
-add x z
-mod x 26
-div z 26
-add x -11
-eql x w
-eql x 0
-mul y 0
-add y 25
-mul y x
-add y 1
-mul z y
-mul y 0
-add y w
-add y 7
-mul y x
-add z y
-inp w
-mul x 0
-add x z
-mod x 26
-div z 1
-add x 15
-eql x w
-eql x 0
-mul y 0
-add y 25
-mul y x
-add y 1
-mul z y
-mul y 0
-add y w
-add y 7
-mul y x
-add z y
-inp w
-mul x 0
-add x z
-mod x 26
-div z 1
-add x 15
-eql x w
-eql x 0
-mul y 0
-add y 25
-mul y x
-add y 1
-mul z y
-mul y 0
-add y w
-add y 12
-mul y x
-add z y
-inp w
-mul x 0
-add x z
-mod x 26
-div z 1
-add x 14
-eql x w
-eql x 0
-mul y 0
-add y 25
-mul y x
-add y 1
-mul z y
-mul y 0
-add y w
-add y 2
-mul y x
-add z y
-inp w
-mul x 0
-add x z
-mod x 26
-div z 26
-add x -7
-eql x w
-eql x 0
-mul y 0
-add y 25
-mul y x
-add y 1
-mul z y
-mul y 0
-add y w
-add y 15
-mul y x
-add z y
-inp w
-mul x 0
-add x z
-mod x 26
-div z 1
-add x 12
-eql x w
-eql x 0
-mul y 0
-add y 25
-mul y x
-add y 1
-mul z y
-mul y 0
-add y w
-add y 4
-mul y x
-add z y
-inp w
-mul x 0
-add x z
-mod x 26
-div z 26
-add x -6
-eql x w
-eql x 0
-mul y 0
-add y 25
-mul y x
-add y 1
-mul z y
-mul y 0
-add y w
-add y 5
-mul y x
-add z y
-inp w
-mul x 0
-add x z
-mod x 26
-div z 26
-add x -10
-eql x w
-eql x 0
-mul y 0
-add y 25
-mul y x
-add y 1
-mul z y
-mul y 0
-add y w
-add y 12
-mul y x
-add z y
-inp w
-mul x 0
-add x z
-mod x 26
-div z 26
-add x -15
-eql x w
-eql x 0
-mul y 0
-add y 25
-mul y x
-add y 1
-mul z y
-mul y 0
-add y w
-add y 11
-mul y x
-add z y
-inp w
-mul x 0
-add x z
-mod x 26
-div z 26
-add x -9
-eql x w
-eql x 0
-mul y 0
-add y 25
-mul y x
-add y 1
-mul z y
-mul y 0
-add y w
-add y 13
-mul y x
-add z y
-inp w
-mul x 0
-add x z
-mod x 26
-div z 26
-add x 0
-eql x w
-eql x 0
-mul y 0
-add y 25
-mul y x
-add y 1
-mul z y
-mul y 0
-add y w
-add y 7
-mul y x
-add z y
+mul x 0//
+add x z//
+mod x 26//
+div z 1//
+add x 15//
+eql x w// x =0
+eql x 0 // x =1
+mul y 0 //
+add y 25 //
+mul y x //
+add y 1 //
+mul z y //
+mul y 0 //
+add y w //
+add y 12 //
+mul y x //
+add z y //
+
+END:
+if w3 == (w2 - 3):
+    x = 1 / y = w5+12/ z = (w0+6 | w1 + 12 | w4 +7 | w5+12)
+else
+    x = 1 / y = w5+12 / z = (w0+6 | w1 + 12 | w3+7 | w4 +7 | w5+12)
+w5 = 1-9
+
+MODULE 6:
+
+START:
+if w3 == (w2 - 3):
+    x = 1 / y = w6+2/ z = (w0+6 | w1 + 12 | w4 +7 | w5+12 | w6+2)
+if w3 != (w2 - 3):
+    x = 1 / y = w6+2 / z = (w0+6 | w1 + 12 | w3+7 | w4 +7 | w5+12 | w6+2)
+w6 = 1-9
+
+inp w //
+mul x 0 //
+add x z //
+mod x 26 //
+div z 1 //
+add x 14 //
+eql x w // does x equal w? no. x is w5+26
+eql x 0 // x = 1
+mul y 0 //
+add y 25 //
+mul y x //
+add y 1 //
+mul z y //
+mul y 0 //
+add y w //
+add y 2 //
+mul y x //
+add z y //
+
+END:
+if w3 == (w2 - 3):
+    x = 1 / y = w6+2/ z = (w0+6 | w1 + 12 | w4 +7 | w5+12 | w6+2)
+if w3 != (w2 - 3):
+    x = 1 / y = w6+2 / z = (w0+6 | w1 + 12 | w3+7 | w4 +7 | w5+12 | w6+2)
+w6 = 1-9
+
+MODULE 7
+
+START:
+if w3 == (w2 - 3):
+    if w6-5 == (w7):
+        x = 0 / y = 0/ z = (w0+6 | w1 + 12 | w4 +7 | w5+12 )
+    if w6-5 != (w7):
+        x = 1 / y = w7 + 15/ z = (w0+6 | w1 + 12 | w4 +7 | w5+12 | w7 + 15)
+if w3 != (w2 - 3):
+    if w6-5 == (w7):
+        x = 0 / y = 0/ z = (w0+6 | w1 + 12 | w3+7 | w4 +7 | w5+12 )
+    if w6-5 != (w7):
+        x = 1 / y = w7 + 15/ z = (w0+6 | w1 + 12 | w3+7 | w4 +7 | w5+12 | w7 + 15 )
+w7 = 1-9
+
+inp w //
+mul x 0 //
+add x z //
+mod x 26 //
+div z 26 // stack ending in w5+12
+add x -7 // w6-5
+eql x w // if w6-5 == w7, x =1, else x =0
+eql x 0 // if w6-5 != w7, x =1, else x =0
+mul y 0 //
+add y 25 //
+mul y x //
+add y 1//
+mul z y //
+mul y 0 //
+add y w //
+add y 15 //
+mul y x //
+add z y //
+
+END:
+if w3 == (w2 - 3):
+    if w6-5 == (w7):
+        x = 0 / y = 0/ z = (w0+6 | w1 + 12 | w4 +7 | w5+12 )
+    if w6-5 != (w7):
+        x = 1 / y = w7 + 15/ z = (w0+6 | w1 + 12 | w4 +7 | w5+12 | w7 + 15)
+if w3 != (w2 - 3):
+    if w6-5 == (w7):
+        x = 0 / y = 0/ z = (w0+6 | w1 + 12 | w3+7 | w4 +7 | w5+12 )
+    if w6-5 != (w7):
+        x = 1 / y = w7 + 15/ z = (w0+6 | w1 + 12 | w3+7 | w4 +7 | w5+12 | w7 + 15 )
+w7 = 1-9
+
+MODULE 8:
+
+START:
+if w3 == (w2 - 3):
+    if w6-5 == (w7):
+        x = 1 / y = w8+4/ z = (w0+6 | w1 + 12 | w4 +7 | w5+12 | w8+4 )
+    if w6-5 != (w7):
+        x = 1 / y = w8+4/ z = (w0+6 | w1 + 12 | w4 +7 | w5+12 | w7 + 15 | w8+4)
+if w3 != (w2 - 3):
+    if w6-5 == (w7):
+        x = 1 / y = w8+4/ z = (w0+6 | w1 + 12 | w3+7 | w4 +7 | w5+12 | w8+4 )
+    if w6-5 != (w7):
+        x = 1 / y = w8+4/ z = (w0+6 | w1 + 12 | w3+7 | w4 +7 | w5+12 | w7 + 15 | w8+4 )
+w8 = 1-9
+
+inp w //
+mul x 0//
+add x z//
+mod x 26//
+div z 1 //
+add x 12 //
+eql x w //
+eql x 0 //
+mul y 0 //
+add y 25 //
+mul y x //
+add y 1 //
+mul z y //
+mul y 0 //
+add y w //
+add y 4 //
+mul y x //
+add z y //
+
+END:
+if w3 == (w2 - 3):
+    if w6-5 == (w7):
+        x = 1 / y = w8+4/ z = (w0+6 | w1 + 12 | w4 +7 | w5+12 | w8+4 )
+    if w6-5 != (w7):
+        x = 1 / y = w8+4/ z = (w0+6 | w1 + 12 | w4 +7 | w5+12 | w7 + 15 | w8+4)
+if w3 != (w2 - 3):
+    if w6-5 == (w7):
+        x = 1 / y = w8+4/ z = (w0+6 | w1 + 12 | w3+7 | w4 +7 | w5+12 | w8+4 )
+    if w6-5 != (w7):
+        x = 1 / y = w8+4/ z = (w0+6 | w1 + 12 | w3+7 | w4 +7 | w5+12 | w7 + 15 | w8+4 )
+w8 = 1-9
+
+
+MODULE 9
+
+//PRUNING IF STATEMENT TO MOST INCLUSIVE AND MOST EXCLUSIVE
+START:
+
+if w3 == (w2 - 3):
+    if w6-5 == (w7):
+        if w9 == w8-2:
+            x = 0 / y = 0/ z = (w0+6 | w1 + 12 | w4 +7 | w5+12  )
+if w3 != (w2-3):
+    if w6-5 != (w7):
+        if w9 != w8-2:
+            x = 1 / y = w9+5/ z = (w0+6 | w1 + 12 | w3+7 | w4 +7 | w5+12 | w7 + 15 | w9+5  )
+w9 = 1-9
+
+inp w //
+mul x 0 //
+add x z //
+mod x 26 //
+div z 26 //
+add x -6 //
+eql x w // does w9 == w8-2 (x =1 if yes, x =0 if no)
+eql x 0 // does w9 != w8-2 (x =1 if yes, x =0 if no)
+mul y 0 //
+add y 25 //
+mul y x //
+add y 1 //
+mul z y //
+mul y 0 //
+add y w //
+add y 5 //
+mul y x //
+add z y //
+
+//PRUNING IF STATEMENT TO MOST INCLUSIVE AND MOST EXCLUSIVE
+END:
+if w3 == (w2 - 3):
+    if w6-5 == (w7):
+        if w9 == w8-2:
+            x = 0 / y = 0/ z = (w0+6 | w1 + 12 | w4 +7 | w5+12  )
+if w3 != (w2-3):
+    if w6-5 != (w7):
+        if w9 != w8-2:
+            x = 1 / y = w9+5/ z = (w0+6 | w1 + 12 | w3+7 | w4 +7 | w5+12 | w7 + 15 | w9+5  )
+w9 = 1-9
+
+MODULE 10
+
+START:
+if w3 == (w2 - 3):
+    if w6-5 == (w7):
+        if w9 == w8-2:
+            x = w5+2  / y = 0/ z = (w0+6 | w1 + 12 | w4 +7  )
+if w3 != (w2-3):
+    if w6-5 != (w7):
+        if w9 != w8-2:
+            x = w9-5 / y = w9+5/ z = (w0+6 | w1 + 12 | w3+7 | w4 +7 | w5+12 | w7 + 15 )
+w10 = 1-9
+
+
+inp w//
+mul x 0//
+add x z//
+mod x 26// x is now either w5+12, w7+15, or w9+5
+div z 26 //
+add x -10 // x is now either w5+2, w7+5, or w9-5
+eql x w //
+eql x 0 //
+mul y 0 //
+add y 25 //
+mul y x //
+add y 1 //
+mul z y //
+mul y 0 //
+add y w //
+add y 12 //
+mul y x //
+add z y //
+
+END:
+if w3 == (w2 - 3):
+    if w6-5 == (w7):
+        if w9 == w8-2:
+            if w10 == w5+2:
+                x = 0 / y = 1/ z = (w0+6 | w1 + 12 | w4 +7 )
+
+MODULE 11:
+START:
+if w3 == (w2 - 3):
+    if w6-5 == (w7):
+        if w9 == w8-2:
+            if w10 == w5+2:
+                x = 0 / y =  1/ z = (w0+6 | w1 + 12 )
+w11 = 1-9
+
+inp w //
+mul x 0 //
+add x z //
+mod x 26 //
+div z 26 //
+add x -15 //
+eql x w // if w11 == w4-8, x = 1
+eql x 0 // if w11 == w4-8, x = 0
+mul y 0 //
+add y 25 //
+mul y x //
+add y 1 //
+mul z y //
+mul y 0 //
+add y w //
+add y 11 // y = w11 + 11
+mul y x // y = 0
+add z y // (w0+6 | w1 + 12 )
+
+END:
+if w3 == (w2 - 3):
+    if w6-5 == (w7):
+        if w9 == w8-2:
+            if w10 == w5+2:
+                if w11 == w4-8:
+                    x = 0 / y =  1/ z = (w0+6 | w1 + 12 )
+w11 = 1-9
+
+MODULE 12
+START:
+if w3 == (w2 - 3):
+    if w6-5 == (w7):
+        if w9 == w8-2:
+            if w10 == w5+2:
+                if w11 == w4-8:
+                    if w12 == w1 + 3:
+                        x = 0/ y =  1/ z = (w0+6 )
+w12 = 1-9
+
+inp w //
+mul x 0 //
+add x z //
+mod x 26 //
+div z 26 //
+add x -9 //
+eql x w // if w12 == w1 + 3, x=1
+eql x 0 // if w12 == w1 + 3, x=0
+mul y 0 //
+add y 25 //
+mul y x //
+add y 1 //
+mul z y //
+mul y 0 //
+add y w //
+add y 13 // y = w12+13
+mul y x // y = 0
+add z y //
+
+MODULE 12
+START:
+if w3 == (w2 - 3):
+    if w6-5 == (w7):
+        if w9 == w8-2:
+            if w10 == w5+2:
+                if w11 == w4-8:
+                    if w12 == w1 + 3:
+                        x = 0/ y =  0/ z = (0)
+w13 = 1-9
+
+inp w //
+mul x 0 //
+add x z //
+mod x 26//
+div z 26//
+add x 0 //
+eql x w // if w13 = w0+6, x=1
+eql x 0 // if w13 = w0+6, x=0
+mul y 0 //
+add y 25 //
+mul y x //
+add y 1 //
+mul z y //
+mul y 0 //
+add y w // y = w13
+add y 7 // y = w13 +7
+mul y x // y =0
+add z y // 0
