@@ -18,6 +18,25 @@ class MapPoint():
         return self.position == other.position
 
 
+def print_map_path_open(map, path, open_path):
+    print()
+    for y, row in enumerate(map):
+        for x, pos in enumerate(row):
+            replace = 0
+            for entry in path:
+                if (y, x) == entry:
+                    print('.', end="")
+                    replace = 1
+            for entry in open_path:
+                if (y, x) == entry and replace == 0:
+                    print(' ', end="")
+                    replace = 1
+            if replace == 0:
+                print(map[y][x], end="")
+        print()
+    print()
+
+
 def astar(map, start, end):
     # initialise starting point of map
     starting_point = MapPoint(None, start)
@@ -63,11 +82,12 @@ def astar(map, start, end):
             while current is not None:  # Builds path from end to start
                 path.append(current.position)
                 current = current.parent
+            print_map_path_open(map, path, [entry.position for entry in open_list])
             return path[::-1]  # Takes the entire path and reverses it
 
         # If we havent reached the ending_point yet, we travel from the current_point:
         adjacent = []
-        for new_position in [(0, -1), (0, 1), (-1, 0), (1, 0)]:
+        for new_position in [(1, 0), (0, 1), (-1, 0), (0, -1)]:
             # Get the position
             point_position = (current_point.position[0] + new_position[0], current_point.position[1] + new_position[1])
             # Make sure new point is in range, else continue with next adjacent point
@@ -106,8 +126,8 @@ def astar(map, start, end):
                     continue
             # Add adjacent pos to the open_list
             open_list.append(pos)
-            # print("Open list: " + str([(entry.position, entry.f) for entry in open_list]))
-            # print("Clsd list: " + str([(entry.position, entry.f) for entry in closed_list]))
+            print("Open list: " + str([(entry.position, entry.f) for entry in open_list]))
+            print("Clsd list: " + str([(entry.position, entry.f) for entry in closed_list]))
 
 
 def main():
@@ -127,19 +147,6 @@ def main():
     start = (0, 0)
     end = ((dimy - 1), (dimx - 1))
     path = astar(map, start, end)
-
-    print()
-    for y, row in enumerate(map):
-        for x, pos in enumerate(row):
-            replace = 0
-            for entry in path:
-                if (y, x) == entry:
-                    print('.', end="")
-                    replace = 1
-            if replace == 0:
-                print(map[y][x], end="")
-        print()
-    print()
 
     answer = path
     print("Answer to 15.0:")
