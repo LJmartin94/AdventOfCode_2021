@@ -50,17 +50,20 @@ def fetch_pos_to_check(open_list, closed_list):
 
     # Move current index from open list to closed list
     open_list.pop(current_index)
-    closed_list[current_point.position] = current_point
+    cp = current_point
+    if cp.position not in closed_list.keys() or closed_list[cp.position] > cp.g:
+        closed_list[cp.position] = cp.g
+    # print(f'Checking position {current_point.position}')
     return current_point
 
 
 def get_lowest_path(closed_list, end):
     path = []
-    current = closed_list[end]
-    while current is not None:  # Builds path from end to start
-        path.append(current.position)
-        current = current.parent
-    path = path[::-1]
+    # current = closed_list[end]
+    # while current is not None:  # Builds path from end to start
+    #     path.append(current.position)
+    #     current = current.parent
+    # path = path[::-1]
     return path
 
 
@@ -77,6 +80,7 @@ def astar(map, start, end):
 
     # Loop until you have nothing left to check
     while len(open_list) > 0:
+        # print(f'Len open: {len(open_list)} // len closed: {len(closed_list)}')
         current_point = fetch_pos_to_check(open_list, closed_list)
         # Calculate adjacents to current position
         for new_position in [(1, 0), (0, 1), (-1, 0), (0, -1)]:
@@ -92,30 +96,31 @@ def astar(map, start, end):
             new_map_point = MapPoint(current_point, point_position)
             pos = new_map_point
             pos.g = current_point.g + map[pos.position[0]][pos.position[1]]
-            pos.h = (abs(end[0] - pos.position[0]) + abs(end[1] - pos.position[1])) * 5
+            pos.h = (abs(end[0] - pos.position[0]) + abs(end[1] - pos.position[1]))
             # pos.h = ((pos.position[0] - end[0]) ** 2) + ((pos.position[1] - end[1]) ** 2)
             pos.f = pos.g + pos.h
             # Check if position was already checked and had better cost
-            if pos.position in closed_list.keys() and (closed_list[pos.position]).g <= pos.g:
+            if pos.position in closed_list.keys() and (closed_list[pos.position]) <= pos.g:
                 continue
             # Otherwise, add it to list of positions to still be considered
-            open_list.append(pos)
+            if pos not in open_list:
+                open_list.append(pos)
         # Once all relevant adjacent points have been added, move this point to closed
         cp = current_point
-        if cp.position not in closed_list.keys() or (closed_list[cp.position]).g > cp.g:
+        if cp.position not in closed_list.keys() or (closed_list[cp.position]) > cp.g:
             closed_list[cp.position] = cp
         if end in closed_list.keys():
-            if closed_list[end].g < prev_val:
-                prev_val = closed_list[end].g
-                print(get_lowest_path(closed_list, end))
+            if closed_list[end] < prev_val:
+                prev_val = closed_list[end]
+                # print(get_lowest_path(closed_list, end))
                 print(prev_val)
 
     # Potentially interesting values to return:
 
-    all_risk_vals = {key:(value.g) for key, value in closed_list.items()}
-    lowest_end_risk_val = (closed_list[end]).g
-    lowest_risk_path = get_lowest_path(closed_list, end)
-    return(lowest_end_risk_val)
+    # all_risk_vals = {key: (value.g) for key, value in closed_list.items()}
+    lowest_end_risk_val = (closed_list[end])
+    # lowest_risk_path = get_lowest_path(closed_list, end)
+    return (lowest_end_risk_val)
 
 
 def big_map_print(big_map):
@@ -149,10 +154,8 @@ def main():
                     if big_map[y + (ym * dimy)][x + (xm * dimx)] > 9:
                         big_map[y + (ym * dimy)][x + (xm * dimx)] = big_map[y + (ym * dimy)][x + (xm * dimx)] - 9
 
-
     start = (0, 0)
     end = (((dimy * 5) - 1), ((dimx * 5) - 1))
-    # big_map_print(big_map)
     path = astar(big_map, start, end)
 
     answer = path
