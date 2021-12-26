@@ -1,0 +1,271 @@
+Module 1
+w = input()
+z.push (w + 6)
+
+
+
+inp w // A (1-9)
+mul x 0 // set x to zero
+add x z // make x same val as z
+mod x 26 // z = x modulo 26, so see z's last val
+div z 1 //na
+add x 11 // add 11 to z's last val, stored in x
+eql x w // if A is equal to z+11, make x 1 else 0 (so 0)
+eql x 0 // if x == 0, x = 1 (so 1)
+mul y 0 // y = 0
+add y 25 // y =25
+mul y x // y = 25
+add y 1 // y = 26
+mul z y // z *= 26 (so 0)
+mul y 0 // y = 0
+add y w // y = w
+add y 6 // y = w+6
+mul y x // y = w+6 * 1
+add z y // z = w+6
+
+END:
+w = 1-9 / x = 1  / y = w+6 / z = w + 6
+
+Module 2
+
+START:
+w[1] = 1-9 / x = 1 / y = w + 12 / z = (w[0] + 6) * 26 + (w[1] + 12)
+
+inp w
+mul x 0
+add x z
+mod x 26
+div z 1
+add x 11
+eql x w // if x is equal to w, x = 1 (so x = 0)
+eql x 0 // if x is equal to 0, x = 1 (so x = 1)
+mul y 0
+add y 25
+mul y x
+add y 1 //
+mul z y // z * 26
+mul y 0
+add y w // y = w
+add y 12 // y = w + 12
+mul y x // y = w + 12
+add z y
+
+END:
+w[1] = 1-9 / x = 1 / y = w + 12 / z = (w[0] + 6) * 26 + (w[1] + 12)
+
+inp w
+mul x 0
+add x z
+mod x 26
+div z 1
+add x 15
+eql x w
+eql x 0
+mul y 0
+add y 25
+mul y x
+add y 1
+mul z y
+mul y 0
+add y w
+add y 8
+mul y x
+add z y
+inp w
+mul x 0
+add x z
+mod x 26
+div z 26
+add x -11
+eql x w
+eql x 0
+mul y 0
+add y 25
+mul y x
+add y 1
+mul z y
+mul y 0
+add y w
+add y 7
+mul y x
+add z y
+inp w
+mul x 0
+add x z
+mod x 26
+div z 1
+add x 15
+eql x w
+eql x 0
+mul y 0
+add y 25
+mul y x
+add y 1
+mul z y
+mul y 0
+add y w
+add y 7
+mul y x
+add z y
+inp w
+mul x 0
+add x z
+mod x 26
+div z 1
+add x 15
+eql x w
+eql x 0
+mul y 0
+add y 25
+mul y x
+add y 1
+mul z y
+mul y 0
+add y w
+add y 12
+mul y x
+add z y
+inp w
+mul x 0
+add x z
+mod x 26
+div z 1
+add x 14
+eql x w
+eql x 0
+mul y 0
+add y 25
+mul y x
+add y 1
+mul z y
+mul y 0
+add y w
+add y 2
+mul y x
+add z y
+inp w
+mul x 0
+add x z
+mod x 26
+div z 26
+add x -7
+eql x w
+eql x 0
+mul y 0
+add y 25
+mul y x
+add y 1
+mul z y
+mul y 0
+add y w
+add y 15
+mul y x
+add z y
+inp w
+mul x 0
+add x z
+mod x 26
+div z 1
+add x 12
+eql x w
+eql x 0
+mul y 0
+add y 25
+mul y x
+add y 1
+mul z y
+mul y 0
+add y w
+add y 4
+mul y x
+add z y
+inp w
+mul x 0
+add x z
+mod x 26
+div z 26
+add x -6
+eql x w
+eql x 0
+mul y 0
+add y 25
+mul y x
+add y 1
+mul z y
+mul y 0
+add y w
+add y 5
+mul y x
+add z y
+inp w
+mul x 0
+add x z
+mod x 26
+div z 26
+add x -10
+eql x w
+eql x 0
+mul y 0
+add y 25
+mul y x
+add y 1
+mul z y
+mul y 0
+add y w
+add y 12
+mul y x
+add z y
+inp w
+mul x 0
+add x z
+mod x 26
+div z 26
+add x -15
+eql x w
+eql x 0
+mul y 0
+add y 25
+mul y x
+add y 1
+mul z y
+mul y 0
+add y w
+add y 11
+mul y x
+add z y
+inp w
+mul x 0
+add x z
+mod x 26
+div z 26
+add x -9
+eql x w
+eql x 0
+mul y 0
+add y 25
+mul y x
+add y 1
+mul z y
+mul y 0
+add y w
+add y 13
+mul y x
+add z y
+inp w
+mul x 0
+add x z
+mod x 26
+div z 26
+add x 0
+eql x w
+eql x 0
+mul y 0
+add y 25
+mul y x
+add y 1
+mul z y
+mul y 0
+add y w
+add y 7
+mul y x
+add z y
