@@ -37,101 +37,89 @@ def print_map_path_open(map, path, open_path):
     print()
 
 
+def fetch_pos_to_check(open_list, closed_list):
+    # Get 'current' position, find the lowest cost point to check
+    current_point = open_list[0]
+    current_index = 0
+
+    # Below syntax is akin to: index = 0 / for item in open_list: / index += 1
+    for index, item in enumerate(open_list):
+        if item.f < current_point.f:
+            current_point = item
+            current_index = index
+
+    # Move current index from open list to closed list
+    open_list.pop(current_index)
+    closed_list[current_point.position] = current_point
+    return current_point
+
+
+def get_lowest_path(closed_list, end):
+    path = []
+    current = closed_list[end]
+    while current is not None:  # Builds path from end to start
+        path.append(current.position)
+        current = current.parent
+    path = path[::-1]
+    return path
+
+
 def astar(map, start, end):
-    # initialise starting point of map
+    # initialise starting & ending point of map
     starting_point = MapPoint(None, start)
-    starting_point.g = 0
-    starting_point.h = 0
-    starting_point.f = 0
+    starting_point.g = starting_point.h = starting_point.f = 0
+    prev_val = -1
 
-    # initialise ending point of map
-    ending_point = MapPoint(None, end)
-    ending_point.g = 0
-    ending_point.h = 0
-    ending_point.f = 0
-
-    # List of places to check
+    # List of places to check & dictionary of places checked
     open_list = []
-    # List of places checked
-    closed_list = []
-
-    # Add start to list of places to check
+    closed_list = {}
     open_list.append(starting_point)
 
-    # Loop until you find the end
+    # Loop until you have nothing left to check
     while len(open_list) > 0:
-
-        # Get 'current' position, find the lowest cost point to check
-        current_point = open_list[0]
-        current_index = 0
-
-        # Below syntax is akin to: index = 0 / for item in open_list: / index += 1
-        for index, item in enumerate(open_list):
-            if item.f < current_point.f:
-                current_point = item
-                current_index = index
-
-        # Move current index from open list to closed list
-        open_list.pop(current_index)
-        closed_list.append(current_point)
-
-        # Check if current position is the target destination
-        if current_point == ending_point:
-            path = []
-            current = current_point
-            while current is not None:  # Builds path from end to start
-                path.append(current.position)
-                current = current.parent
-            print_map_path_open(map, path, [entry.position for entry in open_list])
-            return path[::-1]  # Takes the entire path and reverses it
-
-        # If we havent reached the ending_point yet, we travel from the current_point:
-        adjacent = []
+        current_point = fetch_pos_to_check(open_list, closed_list)
+        # Calculate adjacents to current position
         for new_position in [(1, 0), (0, 1), (-1, 0), (0, -1)]:
-            # Get the position
             point_position = (current_point.position[0] + new_position[0], current_point.position[1] + new_position[1])
-            # Make sure new point is in range, else continue with next adjacent point
-            if point_position[0] > (len(map) - 1) or point_position[0] < 0 \
-                    or point_position[1] > (len(map[max(0, point_position[0])]) - 1) or point_position[1] < 0:
+            # Check in bounds
+            if not (0 <= point_position[0] < (len(map)) and
+                    0 <= point_position[1] < (len(map[max(0, point_position[0])]))):
                 continue
-            # Check terrain is passable if relevant - in our case it isn't;
-            # so we'll just put in a placeholder that checks if the list entry is a digit.
+            # Check for walls
             if not str(map[point_position[0]][point_position[1]]).isdigit():
                 continue
-            # Create new MapPoint instance based on this new position: (passing current_point as the parent,
-            # and the point_position as this point's coordinates.
+            # Create new MapPoint instance + g/h/f vals
             new_map_point = MapPoint(current_point, point_position)
-            # Mark the new_map_point as adjacent to the current point
-            adjacent.append(new_map_point)
-
-        # Now loop through adjacent positions
-        for pos in adjacent:
-            # Check if you've closed off this position before, if so continue with next pos
-            for closed_pos in closed_list:
-                if closed_pos == pos:
-                    continue
-            # Give adjacent position its g/h/f values
+            pos = new_map_point
             pos.g = current_point.g + map[pos.position[0]][pos.position[1]]
-            # Pythagorean C^2 = A^2 + B^2, for 'direct' distance to end point.
-            # pos.h = ((pos.position[0] - ending_point.position[0]) ** 2) + ((pos.position[1] - ending_point.position[1]) ** 2)
-            # Number of squares away from end * 5 (roughly average risk value)
-            pos.h = (abs(ending_point.position[0] - pos.position[0]) + abs(ending_point.position[1] - pos.position[1])) * 5
-            # print(f'Position {pos.position} has h value {pos.h}')
+            pos.h = (abs(end[0] - pos.position[0]) + abs(end[1] - pos.position[1])) * 5
+            # pos.h = ((pos.position[0] - end[0]) ** 2) + ((pos.position[1] - end[1]) ** 2)
             pos.f = pos.g + pos.h
-            # print("Checking pos: " + str(pos.position) + " from parent: " + str(pos.parent.position) + " G == " + str(pos.g) + " H == " + str(pos.h) + " F == " + str(pos.f))
-            # Check if adjacent position is already in the open list of positions being considered ->
-            # then only replace it if it has a lower cost score
-            for open_pos in open_list:
-                if pos == open_pos and pos.g > open_pos.g:
-                    continue
-            # Add adjacent pos to the open_list
+            # Check if position was already checked and had better cost
+            if pos.position in closed_list.keys() and (closed_list[pos.position]).g <= pos.g:
+                continue
+            # Otherwise, add it to list of positions to still be considered
             open_list.append(pos)
-            print("Open list: " + str([(entry.position, entry.f) for entry in open_list]))
-            print("Clsd list: " + str([(entry.position, entry.f) for entry in closed_list]))
+        # Once all relevant adjacent points have been added, move this point to closed
+        cp = current_point
+        if cp.position not in closed_list.keys() or (closed_list[cp.position]).g > cp.g:
+            closed_list[cp.position] = cp
+        if end in closed_list.keys():
+            if closed_list[end].g != prev_val:
+                prev_val = closed_list[end].g
+                print(get_lowest_path(closed_list, end))
+                print(prev_val)
+
+    # Potentially interesting values to return:
+
+    all_risk_vals = {key:(value.g) for key, value in closed_list.items()}
+    lowest_end_risk_val = (closed_list[end]).g
+    lowest_risk_path = get_lowest_path(closed_list, end)
+    return(lowest_end_risk_val)
 
 
 def main():
-    lines = open("test_input.txt").read().split('\n')
+    lines = open("input.txt").read().split('\n')
     dimy = len(lines)
     dimx = len(lines[0])
 
